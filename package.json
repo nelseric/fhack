@@ -4,7 +4,8 @@
   "description": "fhack + redux",
   "main": "src/index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dist": "NODE_ENV=production webpack -p --config webpack.production.config.js"
   },
   "repository": {
     "type": "git",
