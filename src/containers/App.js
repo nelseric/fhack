@@ -11,17 +11,11 @@ import { wordListSelector } from '../selectors/wordListSelector.js';
 
 class App extends Component {
   render() {
-    const { dispatch, words, wordDistances, possibleLikness } = this.props;
     return (
       <div className="Layout">
         <h1>Solver</h1>
-        <WordList
-          words={words}
-          wordDistances={wordDistances}
-          possibleLikness={possibleLikness}
-          {...bindActionCreators(WordListActions, dispatch)} />
-        <NewWordForm
-          {...bindActionCreators(WordListActions, dispatch)} />
+        <WordList />
+        <NewWordForm {...bindActionCreators(WordListActions, this.props.dispatch)} />
       </div>
     );
   }

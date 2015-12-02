@@ -31,6 +31,15 @@ const wordDistancesSelector = createSelector(
   }
 );
 
+const filteredWordSelector = createSelector(
+  wordsSelector,
+  constraintsSelector,
+  wordDistancesSelector,
+  function filterWords(words, constraints, wordDistances) {
+    return words;
+  }
+);
+
 const possibleLikenessSelector = createSelector(
   wordDistancesSelector,
   function select(wordDistances) {
@@ -40,12 +49,46 @@ const possibleLikenessSelector = createSelector(
   }
 );
 
+const possibleMatchValuesSelector = createSelector(
+  possibleLikenessSelector,
+  (possibleLikeness) => !possibleLikeness.isEmpty() ? possibleLikeness.toSet().reduce((a, b) => a.merge(b)).sort() : possibleLikeness
+);
+
+const averageLikenessSelector = createSelector(
+  wordDistancesSelector,
+  function select(wordDistances) {
+    const averageLikeness = wordDistances.map(
+      function avg(distances) {
+        let totalLikeness = 0.0;
+        if (distances.count() > 0) {
+          totalLikeness = distances.toList().reduce(
+            (total, other) => total + other
+          ) / distances.count();
+        }
+        return totalLikeness;
+      }
+    );
+    return averageLikeness;
+  }
+);
+
 export const wordListSelector = createSelector(
   wordsSelector,
+  filteredWordSelector,
   constraintsSelector,
   wordDistancesSelector,
   possibleLikenessSelector,
-  (words, constraints, wordDistances, possibleLikeness) => (
-    {words, constraints, wordDistances, possibleLikeness}
+  possibleMatchValuesSelector,
+  averageLikenessSelector,
+  (
+    words, constraints, wordDistances,
+    possibleLikeness, possibleMatchValues,
+    averageLikeness, filteredWords
+  ) => (
+    {
+      words: words.sortBy((word)=>0 - averageLikeness.get(word)), constraints, wordDistances,
+      possibleLikeness, possibleMatchValues,
+      averageLikeness, filteredWords,
+    }
   )
 );

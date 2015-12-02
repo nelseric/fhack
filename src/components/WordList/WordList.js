@@ -1,22 +1,36 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import * as WordListActions from '../../actions/WordListActions';
+import { wordListSelector } from '../../selectors/wordListSelector.js';
+
+
 import './WordList.scss';
-// import Actions from '../../lib/Actions';
-// import WordStore from '../../lib/WordStore';
 
 class WordList extends Component {
 
   constructor() {
     super();
   }
+  _delWord(word){
+    this.props.dispatch(WordListActions.delWord(word));
+  }
+
+  _clickConstraint(word, likeness){
+    this.props.dispatch(WordListActions.addConstraint(word, likeness));
+  }
 
   render() {
-    const self = this;
     return (
       <table className='WordList'>
         <thead>
           <tr>
             <th>Word</th>
+            <th>Avg</th>
             <th>Dud</th>
+            {this.props.possibleMatchValues.map((val) => (
+              <th key={val}>{val}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -28,11 +42,16 @@ class WordList extends Component {
                     "{word}"
                   </td>
                   <td>
-                    <button onClick={()=>this.props.delWord(word)}>Dud</button>
+                    {this.props.averageLikeness.get(word).toFixed(2)}
                   </td>
                   <td>
-                    {this.props.possibleLikeness.get(word).toString()}
+                    <button onClick={()=>this._delWord(word)}>Dud</button>
                   </td>
+                  {this.props.possibleMatchValues.map((val) => (
+                    <th key={val}>{this.props.possibleLikeness.get(word).has(val) ? (
+                      <button onClick={()=>this._clickConstraint(word,val)}>{val}</button>
+                    ) : " "}</th>
+                  ))}
                 </tr>
               )
             }.bind(this))
@@ -44,4 +63,4 @@ class WordList extends Component {
 }
 
 
-export default WordList;
+export default connect(wordListSelector)(WordList);
