@@ -12,6 +12,10 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: [
+      new HtmlWebpackPlugin({
+      title: "FHack",
+      filename: "index.html"
+    }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       PRODUCTION: process.env.NODE_ENV === 'production'

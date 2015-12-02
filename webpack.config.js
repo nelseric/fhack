@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   devtool: 'eval',
@@ -14,6 +15,10 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      title: "FHack",
+      filename: "index.html"
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
@@ -21,11 +26,17 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
-      exclude: /node_modules/,
-      include: path.join(__dirname, 'src')
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['react-hot', 'babel'],
+        exclude: /node_modules/,
+        include: path.join(__dirname, 'src')
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
+      }
+    ]
   }
 };

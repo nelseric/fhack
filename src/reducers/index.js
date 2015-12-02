@@ -1,9 +1,12 @@
 
 import { combineReducers } from 'redux';
-import counter from './counter';
+
+import words from './words';
+import constraints from './constraints';
 
 const rootReducer = combineReducers({
-  counter
+  words,
+  constraints,
 });
 
 export default rootReducer;
