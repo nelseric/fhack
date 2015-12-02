@@ -74,21 +74,21 @@ const averageLikenessSelector = createSelector(
 
 export const wordListSelector = createSelector(
   wordsSelector,
-  filteredWordSelector,
   constraintsSelector,
   wordDistancesSelector,
   possibleLikenessSelector,
   possibleMatchValuesSelector,
   averageLikenessSelector,
+  filteredWordSelector,
   (
     words, constraints, wordDistances,
     possibleLikeness, possibleMatchValues,
     averageLikeness, filteredWords
   ) => (
     {
-      words: words.sortBy((word)=>0 - averageLikeness.get(word)), constraints, wordDistances,
+      words: filteredWords.sortBy((word)=>0 - averageLikeness.get(word)), constraints, wordDistances,
       possibleLikeness, possibleMatchValues,
-      averageLikeness, filteredWords,
+      averageLikeness, allWords: words, 
     }
   )
 );
