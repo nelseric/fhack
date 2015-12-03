@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as WordListActions from '../../actions/WordListActions';
 import { wordListSelector } from '../../selectors/wordListSelector.js';
 
+import Immutable from 'immutable';
+
 
 import './WordList.scss';
 
@@ -12,17 +14,17 @@ class WordList extends Component {
   constructor() {
     super();
   }
-  _delWord(word){
+  _delWord(word) {
     this.props.dispatch(WordListActions.delWord(word));
   }
 
-  _clickConstraint(word, likeness){
+  _clickConstraint(word, likeness) {
     this.props.dispatch(WordListActions.addConstraint(word, likeness));
   }
 
   render() {
     return (
-      <table className='WordList'>
+      <table className="WordList">
         <thead>
           <tr>
             <th>Word</th>
@@ -35,8 +37,8 @@ class WordList extends Component {
         </thead>
         <tbody>
           {
-            this.props.words.map(function(word) {
-              return(
+            this.props.words.map(function eachWord(word) {
+              return (
                 <tr className="word" key={word} >
                   <td>
                     "{word}"
@@ -49,11 +51,11 @@ class WordList extends Component {
                   </td>
                   {this.props.possibleMatchValues.map((val) => (
                     <th key={val}>{this.props.possibleLikeness.get(word).has(val) ? (
-                      <button onClick={()=>this._clickConstraint(word,val)}>{val}</button>
-                    ) : " "}</th>
+                      <button onClick={()=>this._clickConstraint(word, val)}>{val}</button>
+                    ) : ' '}</th>
                   ))}
                 </tr>
-              )
+              );
             }.bind(this))
           }
         </tbody>
@@ -61,6 +63,14 @@ class WordList extends Component {
     );
   }
 }
+
+WordList.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  words: React.PropTypes.instanceOf(Immutable.List).isRequired,
+  averageLikeness: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+  possibleMatchValues: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+  possibleLikeness: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+};
 
 
 export default connect(wordListSelector)(WordList);

@@ -32,16 +32,33 @@ const wordDistancesSelector = createSelector(
 );
 
 const filteredWordSelector = createSelector(
-  wordsSelector,
   constraintsSelector,
   wordDistancesSelector,
-  function filterWords(words, constraints, wordDistances) {
-    return words;
+  function filterWords(constraints, wordDistances) {
+    let filteredWords = wordDistances.keySeq().toSet();
+    constraints.forEach(function applyConstraint(val, word) {
+      filteredWords = wordDistances.get(word).filter((matchVal) => matchVal === val).keySeq().toSet();
+    });
+    return filteredWords;
+  }
+);
+
+const filteredWordDistanceSelector = createSelector(
+  filteredWordSelector,
+  wordDistancesSelector,
+  function select(filteredWords, wordDistances) {
+    return wordDistances.filter(
+      (_, word) => filteredWords.has(word)
+    ).map(
+      (val) => val.filter(
+        (_, word) => filteredWords.has(word)
+      )
+    );
   }
 );
 
 const possibleLikenessSelector = createSelector(
-  wordDistancesSelector,
+  filteredWordDistanceSelector,
   function select(wordDistances) {
     const possibleLikeness = wordDistances.map((val) => val.toSet());
 
@@ -88,7 +105,7 @@ export const wordListSelector = createSelector(
     {
       words: filteredWords.sortBy((word)=>0 - averageLikeness.get(word)), constraints, wordDistances,
       possibleLikeness, possibleMatchValues,
-      averageLikeness, allWords: words, 
+      averageLikeness, allWords: words,
     }
   )
 );
