@@ -15,6 +15,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'FHack',
       template: path.join(__dirname, 'src', 'index.html'),
+      hash: true,
     }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
