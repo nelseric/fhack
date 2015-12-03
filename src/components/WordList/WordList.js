@@ -66,7 +66,7 @@ class WordList extends Component {
 
 WordList.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
-  words: React.PropTypes.instanceOf(Immutable.List).isRequired,
+  words: React.PropTypes.instanceOf(Immutable.OrderedSet).isRequired,
   averageLikeness: React.PropTypes.instanceOf(Immutable.Map).isRequired,
   possibleMatchValues: React.PropTypes.instanceOf(Immutable.Map).isRequired,
   possibleLikeness: React.PropTypes.instanceOf(Immutable.Map).isRequired,

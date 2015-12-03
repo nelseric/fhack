@@ -37,7 +37,7 @@ const filteredWordSelector = createSelector(
   function filterWords(constraints, wordDistances) {
     let filteredWords = wordDistances.keySeq().toSet();
     constraints.forEach(function applyConstraint(val, word) {
-      filteredWords = wordDistances.get(word).filter((matchVal) => matchVal === val).keySeq().toSet();
+      filteredWords = filteredWords.intersect(wordDistances.get(word).filter((matchVal) => matchVal === val).keySeq().toSet());
     });
     return filteredWords;
   }
