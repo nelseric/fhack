@@ -10,12 +10,11 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist/',
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'FHack',
-      filename: 'index.html',
+      template: path.join(__dirname, 'src', 'index.html'),
     }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
