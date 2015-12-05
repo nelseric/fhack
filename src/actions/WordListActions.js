@@ -1,4 +1,4 @@
-import { ADD_WORD, DEL_WORD, ADD_CONSTRAINT, RESET_CONSTRAINTS } from '../constants/ActionTypes';
+import { ADD_WORD, DEL_WORD, ADD_CONSTRAINT, RESET_WORDS, RESET_CONSTRAINTS } from '../constants/ActionTypes';
 
 export function addWord(word) {
   return {
@@ -21,7 +21,11 @@ export function addConstraint(word, matches) {
     matches: matches,
   };
 }
-
+export function resetWords(){
+  return {
+    type: RESET_WORDS,
+  };
+}
 export function resetConstraints() {
   return {
     type: RESET_CONSTRAINTS,
