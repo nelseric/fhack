@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import DevTools from './DevTools';
 
+/* eslint-disable react/prop-types */
 export default class Root extends Component {
   render() {
     const { store } = this.props;

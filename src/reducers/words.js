@@ -8,7 +8,7 @@ export default function words(state = Set(), action) {
     return state.add(action.word);
   case DEL_WORD:
     return state.delete(action.word);
-  case CLEAR_WORDS:
+  case RESET_WORDS:
     return state.clear();
   default:
     return state;

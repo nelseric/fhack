@@ -21,7 +21,7 @@ export function addConstraint(word, matches) {
     matches: matches,
   };
 }
-export function resetWords(){
+export function resetWords() {
   return {
     type: RESET_WORDS,
   };

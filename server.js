@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.config');
 
+/* eslint-disable no-console */
+
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
   hot: true,
