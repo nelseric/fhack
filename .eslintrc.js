@@ -1,6 +1,9 @@
 module.exports = {
   'parser': 'babel-eslint',
   'extends': 'airbnb',
+  'env': {
+    'mocha': true,
+  },
   'globals': {
     'PRODUCTION': false,
   },

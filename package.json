@@ -5,7 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node server.js",
-    "dist": "NODE_ENV=production webpack -p --config webpack.production.config.js"
+    "dist": "NODE_ENV=production webpack -p --config webpack.production.config.js",
+    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test:watch": "npm test -- --watch",
+    "coverage": "babel-node node_modules/isparta/bin/isparta cover --report text --report html --root src --include-all-sources node_modules/mocha/bin/_mocha -- --reporter dot --recursive"
   },
   "repository": {
     "type": "git",
@@ -47,11 +50,15 @@
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
+    "babel-register": "^6.3.13",
+    "chai": "^3.4.1",
     "css-loader": "^0.23.0",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^1.0.2",
     "eslint-plugin-react": "^3.11.2",
     "html-webpack-plugin": "^1.7.0",
+    "isparta": "^4.0.0",
+    "mocha": "^2.3.4",
     "node-sass": "^3.4.2",
     "react-hot-loader": "^1.3.0",
     "redux-devtools": "^3.0.0-beta-3",
