@@ -1,6 +1,8 @@
 
 import { combineReducers } from 'redux';
 
+import undoable from 'redux-undo';
+
 import words from './words';
 import constraints from './constraints';
 
@@ -9,4 +11,4 @@ const rootReducer = combineReducers({
   constraints,
 });
 
-export default rootReducer;
+export default undoable(rootReducer);
