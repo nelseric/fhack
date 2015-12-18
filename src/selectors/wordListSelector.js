@@ -3,8 +3,9 @@ import { createSelector } from 'reselect';
 
 import {Map} from 'immutable';
 
-const wordsSelector = (state) => state.words;
-const constraintsSelector = (state) => state.constraints;
+const wordsSelector = (state) => state.present.words;
+const constraintsSelector = (state) => state.present.constraints;
+
 
 function wordLikeness(word, otherWord) {
   let likeness = 0;
@@ -37,7 +38,13 @@ const filteredWordSelector = createSelector(
   function filterWords(constraints, wordDistances) {
     let filteredWords = wordDistances.keySeq().toSet();
     constraints.forEach(function applyConstraint(val, word) {
-      filteredWords = filteredWords.intersect(wordDistances.get(word).filter((matchVal) => matchVal === val).keySeq().toSet());
+      filteredWords = filteredWords.intersect(
+        wordDistances
+          .get(word)
+          .filter((matchVal) => matchVal === val)
+          .keySeq()
+          .toSet()
+      );
     });
     return filteredWords;
   }
@@ -90,22 +97,21 @@ const averageLikenessSelector = createSelector(
 );
 
 export const wordListSelector = createSelector(
-  wordsSelector,
-  constraintsSelector,
-  wordDistancesSelector,
   possibleLikenessSelector,
   possibleMatchValuesSelector,
   averageLikenessSelector,
   filteredWordSelector,
   (
-    words, constraints, wordDistances,
-    possibleLikeness, possibleMatchValues,
-    averageLikeness, filteredWords
+    possibleLikeness,
+    possibleMatchValues,
+    averageLikeness,
+    filteredWords
   ) => (
     {
-      words: filteredWords.sortBy((word)=>0 - averageLikeness.get(word)), constraints, wordDistances,
-      possibleLikeness, possibleMatchValues,
-      averageLikeness, allWords: words,
+      words: filteredWords.sortBy((word)=>0 - averageLikeness.get(word)),
+      possibleLikeness,
+      possibleMatchValues,
+      averageLikeness,
     }
   )
 );

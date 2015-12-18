@@ -30,6 +30,11 @@ button {
   color: $link-color;
   border: 1px solid $border-color;
 }
+
+button:disabled {
+  visibility: hidden; 
+}
+
 input {
   background: none;
   color: $link-color;
